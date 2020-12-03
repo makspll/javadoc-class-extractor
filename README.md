@@ -57,5 +57,5 @@ class class_info:
 # additional goodies
 example of mapping classes to latex files can be found in *classes_to_tex.py*
 run using `python classes-to-tex.py <path to site folder containing allclasses.index>`
-This will create a doc.tex file which is to be inserted as documentation into your document with \input,
+This will create a doc.tex file which is to be inserted into your document with \input,
 it will also create a paste-me-directly.tex file which is to be copied into the pre-amble of your latex file
