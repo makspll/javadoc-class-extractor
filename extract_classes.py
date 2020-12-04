@@ -95,16 +95,30 @@ def load_class_detail(info,root_path):
         return
     # get extends information
     if "extends" in description_text:
-        extends_a = description.find("pre").select("a")[0]
-        info.extends = extends_a.text
-    
+
+        # find the pre section
+        pre = description.find("pre")
+        
+        link_extends = pre.select("a")[0] if len(pre.select("a")) > 0 else None
+        # in case it's a link, easy target otherwise play with text
+        if link_extends is None:
+            info.extends = pre.text.split("extends")[1].strip()
+        else:
+            info.extends = link_extends.text
+
     # get implemented interafaces 
     if "All Implemented Interfaces:" in description_text:
         code_tags = description.find("dd").find_all("code")
         implemented_as = []
         for c in code_tags:
-            implemented_as.append(c.find("a"))
+            # if links easy target
+            a = c.find("a")
+            if a is not None:
+                implemented_as.append(a)
+            else:
+                implemented_as.append(c)
         info.implements = [x.text.strip() for x in implemented_as]
+        print(info.implements)
 
     # get method data
     regions = details.find_all("section")
